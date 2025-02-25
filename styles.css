@@ -11,6 +11,13 @@ body {
     padding: 10px;
 }
 
+.input {
+    margin: 40px auto;
+    /*display: inline-block;*/
+    width: auto;
+    padding: 10px;
+}
+
 .table {
     border-collapse: collapse;
 }

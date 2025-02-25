@@ -11,11 +11,15 @@ let field = [[EMPTY, EMPTY, EMPTY],
 let turn = 0;
 let endOfGame = false;
 
+const numberInput = document.getElementById("size");
+let size= numberInput.value;
+
 startGame();
 addResetListener();
+addCreateListener();
 
-function startGame () {
-    renderGrid(3);
+function startGame (size) {
+    renderGrid(size);
 }
 
 function renderGrid (dimension) {
@@ -74,7 +78,7 @@ function checkWinner()
     let counter = 0;
     let winnerFields = [];
 
-    for (let i = 0; i < 3; i ++) {
+    for (let i = 0; i < size; i ++) {
         counter = 0;
         winnerFields = [];
         
@@ -82,22 +86,22 @@ function checkWinner()
             continue;
         }
 
-        for (let j = 0; j < 2; j++){
+        for (let j = 0; j < size-1; j++){
             
             if (field[i][j] === field[i][j+1]) {
                 counter++;
                 winnerFields[j] = [i, j]
             }
         }
-        winnerFields[2] = [i, 2]
+        winnerFields[size-1] = [i, size-1]
 
-        if (counter === 2){
+        if (counter === size-1){
             alert(field[0][i]);
             return winnerFields;
         }
     }
 
-    for (let i = 0; i < 3; i ++) {
+    for (let i = 0; i < size; i ++) {
         counter = 0;
         winnerFields = [];
         
@@ -105,16 +109,16 @@ function checkWinner()
             continue;
         }
 
-        for (let j = 0; j < 2; j++){
+        for (let j = 0; j < size-1; j++){
             
             if (field[j][i] === field[j+1][i]) {
                 counter++;
                 winnerFields[j] = [j, i]
             }
         }
-        winnerFields[2] = [2, i]
+        winnerFields[size-1] = [size-1, i]
         
-        if (counter === 2){
+        if (counter === size-1){
             alert(field[0][i]);
             return winnerFields;
         }
@@ -124,35 +128,35 @@ function checkWinner()
         counter = 0;
         winnerFields = [];
 
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < size-1; i++) {
             if (field[i][i] === field[i+1][i+1]) {
                 counter++;
                 winnerFields[i] = [i, i]
             }
         }
-        winnerFields[2] = [2, 2]
+        winnerFields[size-1] = [size-1, size-1]
 
-        if (counter === 2){
+        if (counter === size-1){
             alert(field[0][0]);
             return winnerFields;
         }
     }
 
     
-    if (field[2][0] !== EMPTY) {
+    if (field[size-1][0] !== EMPTY) {
         counter = 0;
         winnerFields = [];
 
-        for (let i = 0; i < 2; i++) {
-            if (field[2-i][i] === field[1-i][i+1]) {
+        for (let i = 0; i < size-1; i++) {
+            if (field[size-1-i][i] === field[size-2-i][1+i]) {
                 counter++;
-                winnerFields[i] = [i, 2-i]
+                winnerFields[i] = [size-1-i, i]
             }
         }
-        winnerFields[2] = [2, 0]
+        winnerFields[size-1] = [0, size-1]
         
-        if (counter === 2){
-            alert(field[2][0]);
+        if (counter === size-1){
+            alert(field[size-1][0]);
             return winnerFields;
         }
     }
@@ -183,18 +187,40 @@ function addResetListener () {
     resetButton.addEventListener('click', resetClickHandler);
 }
 
+function addCreateListener () {
+    const createButton = document.getElementById('create');
+    createButton.addEventListener('click', createClickHandler);
+}
+
 function resetClickHandler () {
     console.log('reset!');
-    field = [[EMPTY, EMPTY, EMPTY],
-             [EMPTY, EMPTY, EMPTY],
-             [EMPTY, EMPTY, EMPTY]];
+    for (let i = 0; i < size; i++) {
+        field[i] = [];
+        for (let j = 0; j < size; j++) {
+            field[i][j] = EMPTY;
+        }
+    }
     turn = 0;
     endOfGame = false;
 
-    for (let i = 0; i < 3; i++)
-        for (let j = 0; j < 3; j++) {
+    for (let i = 0; i < size; i++)
+        for (let j = 0; j < size; j++) {
             renderSymbolInCell(EMPTY, i, j);
         }
+    
+}
+
+function createClickHandler () {
+    size= numberInput.value;
+    
+    for (let i = 0; i < size; i++) {
+        field[i] = [];
+        for (let j = 0; j < size; j++) {
+            field[i][j] = EMPTY;
+        }
+    }
+
+    startGame(size);
     
 }
 
