@@ -4,9 +4,9 @@ const EMPTY = ' ';
 
 const container = document.getElementById('fieldWrapper');
 
-let field = [[' ', ' ', ' '],
-             [' ', ' ', ' '],
-             [' ', ' ', ' ']];
+let field = [[EMPTY, EMPTY, EMPTY],
+             [EMPTY, EMPTY, EMPTY],
+             [EMPTY, EMPTY, EMPTY]];
 
 let turn = 0;
 
@@ -47,6 +47,8 @@ function cellClickHandler (row, col) {
 
     console.log(`Clicked on cell: ${row}, ${col}`);
 
+    checkWinner();
+
     if (!field.flat().includes(EMPTY)){
         alert("Победила дружба");
     }
@@ -54,6 +56,78 @@ function cellClickHandler (row, col) {
     /* Пользоваться методом для размещения символа в клетке так:
         renderSymbolInCell(ZERO, row, col);
      */
+}
+
+function checkWinner()
+{
+    let counter = 0;
+
+    for (let i = 0; i < 3; i ++) {
+        counter = 0;
+        
+        if (field[i][0] === EMPTY) {
+            continue;
+        }
+
+        for (let j = 0; j < 2; j++){
+            
+            if (field[i][j] === field[i][j+1]) {
+                counter++;
+            }
+        }
+        
+        if (counter === 2){
+            alert(field[0][i]);
+        }
+    }
+
+    for (let i = 0; i < 3; i ++) {
+        counter = 0;
+        
+        if (field[0][i] === EMPTY) {
+            continue;
+        }
+
+        for (let j = 0; j < 2; j++){
+            
+            if (field[j][i] === field[j+1][i]) {
+                counter++;
+            }
+        }
+        
+        if (counter === 2){
+            alert(field[0][i]);
+        }
+    }
+    
+    if (field[0][0] !== EMPTY) {
+        counter = 0;
+
+        for (let i = 0; i < 2; i++) {
+            if (field[i][i] === field[i+1][i+1]) {
+                counter++;
+            }
+        }
+
+        if (counter === 2){
+            alert(field[0][0]);
+        }
+    }
+
+    
+    if (field[2][0] !== EMPTY) {
+        counter = 0;
+        for (let i = 0; i < 2; i++) {
+            
+            if (field[2-i][i] === field[1-i][i+1]) {
+                counter++;
+            }
+        }
+        
+        if (counter === 2){
+            alert(field[2][0]);
+        }
+    }
 }
 
 function renderSymbolInCell (symbol, row, col, color = '#333') {
