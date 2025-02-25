@@ -185,6 +185,17 @@ function addResetListener () {
 
 function resetClickHandler () {
     console.log('reset!');
+    field = [[EMPTY, EMPTY, EMPTY],
+             [EMPTY, EMPTY, EMPTY],
+             [EMPTY, EMPTY, EMPTY]];
+    turn = 0;
+    endOfGame = false;
+
+    for (let i = 0; i < 3; i++)
+        for (let j = 0; j < 3; j++) {
+            renderSymbolInCell(EMPTY, i, j);
+        }
+    
 }
 
 
