@@ -8,6 +8,7 @@ let field = [[' ', ' ', ' '],
              [' ', ' ', ' '],
              [' ', ' ', ' ']];
 
+let turn = 0;
 startGame();
 addResetListener();
 
@@ -31,7 +32,16 @@ function renderGrid (dimension) {
 }
 
 function cellClickHandler (row, col) {
-    // Пиши код тут
+    if (turn % 2 === 0) {
+        field[col][row] = CROSS;
+        renderSymbolInCell(CROSS, row, col);
+    } else {
+        field[col][row] = ZERO;
+        renderSymbolInCell(ZERO, row, col);
+    }
+
+    turn++;
+
     console.log(`Clicked on cell: ${row}, ${col}`);
 
 
