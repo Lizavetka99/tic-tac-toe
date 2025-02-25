@@ -47,7 +47,7 @@ function cellClickHandler (row, col) {
 
     console.log(`Clicked on cell: ${row}, ${col}`);
 
-    checkWinner();
+    console.log(checkWinner());
 
     if (!field.flat().includes(EMPTY)){
         alert("Победила дружба");
@@ -61,9 +61,11 @@ function cellClickHandler (row, col) {
 function checkWinner()
 {
     let counter = 0;
+    let winnerFields = [];
 
     for (let i = 0; i < 3; i ++) {
         counter = 0;
+        winnerFields = [];
         
         if (field[i][0] === EMPTY) {
             continue;
@@ -73,16 +75,20 @@ function checkWinner()
             
             if (field[i][j] === field[i][j+1]) {
                 counter++;
+                winnerFields[j] = [i, j]
             }
         }
-        
+        winnerFields[2] = [i, 2]
+
         if (counter === 2){
             alert(field[0][i]);
+            return winnerFields;
         }
     }
 
     for (let i = 0; i < 3; i ++) {
         counter = 0;
+        winnerFields = [];
         
         if (field[0][i] === EMPTY) {
             continue;
@@ -92,40 +98,51 @@ function checkWinner()
             
             if (field[j][i] === field[j+1][i]) {
                 counter++;
+                winnerFields[j] = [j, i]
             }
         }
+        winnerFields[2] = [2, i]
         
         if (counter === 2){
             alert(field[0][i]);
+            return winnerFields;
         }
     }
     
     if (field[0][0] !== EMPTY) {
         counter = 0;
+        winnerFields = [];
 
         for (let i = 0; i < 2; i++) {
             if (field[i][i] === field[i+1][i+1]) {
                 counter++;
+                winnerFields[i] = [i, i]
             }
         }
+        winnerFields[2] = [2, 2]
 
         if (counter === 2){
             alert(field[0][0]);
+            return winnerFields;
         }
     }
 
     
     if (field[2][0] !== EMPTY) {
         counter = 0;
+        winnerFields = [];
+
         for (let i = 0; i < 2; i++) {
-            
             if (field[2-i][i] === field[1-i][i+1]) {
                 counter++;
+                winnerFields[i] = [i, 2-i]
             }
         }
+        winnerFields[2] = [2, 0]
         
         if (counter === 2){
             alert(field[2][0]);
+            return winnerFields;
         }
     }
 }
