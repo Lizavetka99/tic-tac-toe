@@ -9,6 +9,7 @@ let field = [[EMPTY, EMPTY, EMPTY],
              [EMPTY, EMPTY, EMPTY]];
 
 let turn = 0;
+let endOfGame = false;
 
 startGame();
 addResetListener();
@@ -33,6 +34,9 @@ function renderGrid (dimension) {
 }
 
 function cellClickHandler (row, col) {
+    if (endOfGame) {
+        return;
+    }
     if (field[col][row] !== EMPTY) return;
 
     if (turn % 2 === 0) {
@@ -47,7 +51,13 @@ function cellClickHandler (row, col) {
 
     console.log(`Clicked on cell: ${row}, ${col}`);
 
-    console.log(checkWinner());
+    const winner = checkWinner();
+    console.log(winner);
+    if (winner) {
+        drawRedWinner(winner);
+        endOfGame = true;
+    }
+
 
     if (!field.flat().includes(EMPTY)){
         alert("Победила дружба");
@@ -57,6 +67,7 @@ function cellClickHandler (row, col) {
         renderSymbolInCell(ZERO, row, col);
      */
 }
+
 
 function checkWinner()
 {
@@ -145,8 +156,16 @@ function checkWinner()
             return winnerFields;
         }
     }
+
+    return null;
 }
 
+function drawRedWinner(winnerFields){
+    for (const i in winnerFields) {
+        console.log(i)
+        renderSymbolInCell(field[winnerFields[i][0]][winnerFields[i][1]], winnerFields[i][1], winnerFields[i][0], "#FF0000");
+    }
+}
 function renderSymbolInCell (symbol, row, col, color = '#333') {
     const targetCell = findCell(row, col);
 
