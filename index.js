@@ -9,6 +9,7 @@ let field = [[' ', ' ', ' '],
              [' ', ' ', ' ']];
 
 let turn = 0;
+
 startGame();
 addResetListener();
 
@@ -41,12 +42,14 @@ function cellClickHandler (row, col) {
         field[col][row] = ZERO;
         renderSymbolInCell(ZERO, row, col);
     }
-    
 
     turn++;
 
     console.log(`Clicked on cell: ${row}, ${col}`);
 
+    if (!field.flat().includes(EMPTY)){
+        alert("Победила дружба");
+    }
 
     /* Пользоваться методом для размещения символа в клетке так:
         renderSymbolInCell(ZERO, row, col);
